@@ -51,6 +51,7 @@ void execute(char * thing){
   for(int i = 0; args[i]; i++){
     printf("args[%d]: %s\n", i, args[i]);
   }
+  
   int f = fork();
   int status;
   if(!f){
@@ -60,4 +61,3 @@ void execute(char * thing){
     wait(&status);
   }
 }
-

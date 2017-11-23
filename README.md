@@ -1,8 +1,9 @@
-# Fall, 2017 - P1_shell
+# P1_shell
 
-**Collaborators:** Penn Wu, Ida Wang
+### Collaborators:
+Penn Wu, Ida Wang
 
-Shell-ing out commands.
+Shell-ing out commands. Fall, 2017.
 
 ### Features
 Nothing.
@@ -14,4 +15,5 @@ See above.
 See above (pt. 2).
 
 ### Function Headers
-See above (pt. 3).
+- `char ** parse_args(char * s)`
+- `void execute(char * thing)`
