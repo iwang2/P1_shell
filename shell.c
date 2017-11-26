@@ -26,23 +26,23 @@ Specific Requirements:
 */
 
 char ** parse_args(char * s){
-  char line[256];
+  char * line = (char *)calloc(256, sizeof(char));
   strcpy(line, s);
   printf("%s\n", line);
-  char ** thing = calloc(sizeof(char *), 6);
+  char ** args = (char **)calloc(6, sizeof(char *));
   char * s1 = line;
   int i;
   for (i = 0; s1; i ++) {
-    thing[i] = strsep(&s1, " ");
+    args[i] = strsep(&s1, " ");
   }
-  for(i = 0; thing[i]; i++){
-    printf("things[%d]: %s\n", i, thing[i]);
-  }
-  return thing;
+  /*for(i = 0; args[i]; i++){
+    printf("args[%d]: %s\n", i, args[i]);
+  }*/
+  return args;
 }
 
 void execute(char * s){
-  char line[256];
+  /*char line[256];
   strcpy(line, s);
   printf("%s\n", line);
   char ** args = (char **)calloc(sizeof(char *), 6);
@@ -53,15 +53,20 @@ void execute(char * s){
   }
   for(i = 0; args[i]; i++){
     printf("args[%d]: %s\n", i, args[i]);
-  }
-  
+  }*/
   int f = fork();
-  int status;
   if(!f){
+    char ** args = parse_args(s);
+    /*int i;
+    for (i = 0; args[i]; i ++) {
+      printf("args[%d]: %s\n", i, args[i]);
+    }*/
     execvp(args[0], args);
+    free(args);
+    exit(0);
   }
   else{
+    int status;
     wait(&status);
-    free(args);
   }
 }

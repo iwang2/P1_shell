@@ -13,4 +13,5 @@ int main(){
   printf("START OF PROGRAM OUTPUT\n");
   execute("ls -a -l");
   execute("echo potato");
+  return 0;
 }
