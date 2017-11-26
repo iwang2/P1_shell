@@ -42,6 +42,41 @@ char ** parse_args(char * s){
 }
 
 void execute(char * s){
+  char * line = (char *)calloc(256, sizeof(char));
+  strcpy(line, s);
+  //printf("%s\n", line);
+  char ** commands = (char **)calloc(6, sizeof(char *));
+  char * s1 = line;
+
+  int i;
+  for(i = 0; s1; i++){
+    commands[i] = clean(strsep(&s1, ";"));
+    //printf("commands[%d]: \"%s\"\n", i, commands[i]);
+  }
+
+  for(i = 0; commands[i]; i++){
+    execute_args(commands[i]);
+  }
+}
+
+char * clean (char * s){
+  //trim head whitespace
+  int i = 0;
+  while(s[i] == ' '){
+    i++;
+  }
+  s += i;
+
+  //trim ending whitespace
+  char * end = s + strlen(s)-1;
+  while(end > s && end[0] == ' '){
+    end--;
+  }
+  *(end+1) = 0;
+  return s;
+}
+
+void execute_args(char * s){
   /*char line[256];
   strcpy(line, s);
   printf("%s\n", line);

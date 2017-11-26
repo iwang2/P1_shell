@@ -6,7 +6,7 @@ Fall, 2017.
 Penn Wu, Ida Wang
 
 ### Features
-Pass a string of arguments (1 set of commands) to be executed.
+Pass one or more commands in a single line to be executed.
 
 ### Failed Features
 We have not yet attempted the semicolon thing, as well as `cd` and `exit`. Basically, we only have two functions so testing the executing of a command from a string only happens in the main file, not from terminal input.
@@ -15,5 +15,7 @@ We have not yet attempted the semicolon thing, as well as `cd` and `exit`. Basic
 Nothing so far.
 
 ### Function Headers
+- `char * clean(char * s)`
 - `char ** parse_args(char * s)`
+- `void execute_args(char * s)`
 - `void execute(char * s)`
