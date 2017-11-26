@@ -28,27 +28,30 @@ Specific Requirements:
 char ** parse_args(char * s){
   char line[256];
   strcpy(line, s);
-  printf("parse args: %s\n", line);
-  
+  printf("%s\n", line);
   char ** thing = calloc(sizeof(char *), 6);
   char * s1 = line;
-  int i = 0;
-  while(s1){
+  int i;
+  for (i = 0; s1; i ++) {
     thing[i] = strsep(&s1, " ");
-    //printf("things[%d]: %s\n", i, thing[i]);
-    i++;
   }
-  for(int i = 0; thing[i]; i++){
+  for(i = 0; thing[i]; i++){
     printf("things[%d]: %s\n", i, thing[i]);
   }
   return thing;
 }
 
-void execute(char * thing){
-  printf("%s\n", thing);
-  char ** args = parse_args(thing);
- 
-  for(int i = 0; args[i]; i++){
+void execute(char * s){
+  char line[256];
+  strcpy(line, s);
+  printf("%s\n", line);
+  char ** args = (char **)calloc(sizeof(char *), 6);
+  char * s1 = line;
+  int i;
+  for (i = 0; s1; i ++) {
+    args[i] = strsep(&s1, " ");
+  }
+  for(i = 0; args[i]; i++){
     printf("args[%d]: %s\n", i, args[i]);
   }
   
@@ -59,5 +62,6 @@ void execute(char * thing){
   }
   else{
     wait(&status);
+    free(args);
   }
 }

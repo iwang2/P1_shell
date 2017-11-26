@@ -10,10 +10,7 @@
 #include "shell.h"
 
 int main(){
-  execute("ls -l -a");
-
-  /*
-  strcpy(args, "echo potato");
-  execute(parse_args(args));
-  */
+  printf("START OF PROGRAM OUTPUT\n");
+  execute("ls -a -l");
+  execute("echo potato");
 }
