@@ -14,12 +14,17 @@ int main(){
   
   printf("\ntesting clean:\n");
   char s[256] = "   hi how are you  ";
-  printf("original string: \"%s\"\n", s);
+  printf("\toriginal string: \"%s\"\n", s);
   strcpy(s, clean(s));
-  printf("cleaned string: \"%s\"\n", s);
+  printf("\tcleaned string: \"%s\"\n", s);
+
+  printf("testing clean with cleaned string:\n");
+  printf("\toriginal string: \"%s\"\n", s);
+  strcpy(s, clean(s));
+  printf("\tcleaned string: \"%s\"\n", s);
   
   printf("\ntesting execute for multiple commands on one line:\n");
-  execute("ls -a -l ; echo potato");
+  execute("ls -a -l ; echo potato; echo 3");
 
   printf("\ntesting execute for only one command:\n");
   execute("echo I hope this works");
