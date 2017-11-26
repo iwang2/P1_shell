@@ -1,19 +1,19 @@
 # P1_shell
+Shell-ing out commands.
+Fall, 2017.
 
 ### Collaborators:
 Penn Wu, Ida Wang
 
-Shell-ing out commands. Fall, 2017.
-
 ### Features
-Nothing.
+Pass a string of arguments (1 set of commands) to be executed.
 
 ### Failed Features
-See above.
+We have not yet attempted the semicolon thing, as well as `cd` and `exit`. Basically, we only have two functions so testing the executing of a command from a string only happens in the main file, not from terminal input.
 
 ### Bugs and Other Stuff
-See above (pt. 2).
+Nothing so far.
 
 ### Function Headers
 - `char ** parse_args(char * s)`
-- `void execute(char * thing)`
+- `void execute(char * s)`

@@ -1,5 +1,5 @@
 // insert headers here!!!
 
-char ** parse_args(char * line);
+char ** parse_args(char * s);
 
-void execute(char * args);
+void execute(char * s);
