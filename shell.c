@@ -104,19 +104,27 @@ void execute_args(char * s){
   else{
     int status;
     wait(&status);
+    
     if (strcmp(args[0], "cd") == 0) {
-    	printf("%s\n", args[1]);
-	chdir(args[1]);
-
-	char d[256];
-	getwd(d);
-	printf("current directory: %s\n", d);
+      //printf("%s\n", args[1]);
+      cd(args[1]);
     }
+    
     if (strcmp(args[0], "exit") == 0) {
-    	printf("Parent dipping\n");
-    	exit(0);
-    	printf("Potato\n");
+      printf("Parent dipping\n");
+      exit(0);
+      printf("Potato\n");
     }
+
+    if (sizeof(args)/sizeof(char *) > 2){
+      // redirection stuff here
+    }
+    
     free(args);
   }
+}
+
+void cd(char * s){
+  chdir(s);
+  printf("current directory: %s\n", get_current_dir_name());
 }
