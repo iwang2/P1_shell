@@ -15,8 +15,9 @@ General Stuff:
 
 2. Read and separate multiple commands on one line with ";". 
 
-3. TBC
-4. TBC
+3. simple redirection: > (stdout) and < (stdin)
+
+4. simple pipes: ls | wc would run ls and use that output for wc input
 
 Specific Requirements:
 1. Every function you write must have a function header describing the arguments, return value, and what the function does (use modular design liberally).
@@ -105,7 +106,11 @@ void execute_args(char * s){
     wait(&status);
     if (strcmp(args[0], "cd") == 0) {
     	printf("%s\n", args[1]);
-    	chdir(args[1]);
+	chdir(args[1]);
+
+	char d[256];
+	getwd(d);
+	printf("current directory: %s\n", d);
     }
     if (strcmp(args[0], "exit") == 0) {
     	printf("Parent dipping\n");

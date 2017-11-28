@@ -27,7 +27,7 @@ int main(){
   execute("ls -a -l ; echo potato; echo 3");
 
   printf("\ntesting execute for only one command:\n");
-  execute("exit");
+  execute("cd ..");
   
   return 0;
 }
