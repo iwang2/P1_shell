@@ -89,9 +89,9 @@ void execute_args(char * s){
   for(i = 0; args[i]; i++){
     printf("args[%d]: %s\n", i, args[i]);
   }*/
+  char ** args = parse_args(s);
   int f = fork();
   if(!f){
-    char ** args = parse_args(s);
     /*int i;
     for (i = 0; args[i]; i ++) {
       printf("args[%d]: %s\n", i, args[i]);
@@ -103,5 +103,15 @@ void execute_args(char * s){
   else{
     int status;
     wait(&status);
+    if (strcmp(args[0], "cd") == 0) {
+    	printf("%s\n", args[1]);
+    	chdir(args[1]);
+    }
+    if (strcmp(args[0], "exit") == 0) {
+    	printf("Parent dipping\n");
+    	exit(0);
+    	printf("Potato\n");
+    }
+    free(args);
   }
 }
