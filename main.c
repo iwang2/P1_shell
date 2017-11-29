@@ -3,6 +3,8 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -28,6 +30,14 @@ int main(){
 
   printf("\ntesting execute for only one command:\n");
   execute("cd ..");
+  
+  //greater("echo potato", "bob.txt");
+  
+  int fd = open("array.txt", O_CREAT | O_WRONLY, 0644);
+  write(fd, "hello", sizeof("hello"));
+  close(fd);
+  
+  printf("%s\n", strerror(errno));
   
   return 0;
 }

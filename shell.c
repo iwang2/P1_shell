@@ -97,15 +97,10 @@ void execute_args(char * s){
       exit(0);
       printf("Potato\n");
     }
-
-    if (sizeof(args)/sizeof(char *) > 2){
-      if(args[1] == ">"){
-	greater(args[0], args[3]);
-      }
-      else if(args[1] == "<"){
-      }
-      else if(args[1] == "|"){
-      }
+    
+    int i = 0;
+    while (args[i]) {
+      i ++;
     }
     
     free(args);
@@ -114,14 +109,18 @@ void execute_args(char * s){
 
 void cd(char * s){
   chdir(s);
-  printf("current directory: %s\n", get_current_dir_name());
+  char dir[256];
+  printf("current directory: %s\n", getcwd(dir, sizeof(dir)));
 }
 
 void greater(char * command, char * file){
+  printf("Creating %s\n", file);
   // execute(command) goes somewhere here...
-  int a = dup(1);
-  int fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 010);
-  dup2(fd, 1);
-  dup2(1, a);
+  //int a = dup(1);
+  int fd = open("bob.txt", O_CREAT | O_WRONLY, 0644);
+  write(fd, command, sizeof(command));
+  //dup2(fd, 1);
+  //execute_args(command);
+  //dup2(1, a);
   close(fd);
 }
