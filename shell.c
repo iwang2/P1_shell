@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -36,9 +37,6 @@ char ** parse_args(char * s){
   for (i = 0; s1; i ++) {
     args[i] = strsep(&s1, " ");
   }
-  /*for(i = 0; args[i]; i++){
-    printf("args[%d]: %s\n", i, args[i]);
-  }*/
   return args;
 }
 
@@ -48,7 +46,6 @@ void execute(char * s){
   //printf("%s\n", line);
   char ** commands = (char **)calloc(6, sizeof(char *));
   char * s1 = line;
-
   int i;
   for(i = 0; s1; i++){
     commands[i] = clean(strsep(&s1, ";"));
@@ -74,29 +71,14 @@ char * clean (char * s){
     end--;
   }
   *(end+1) = 0;
+  
   return s;
 }
 
 void execute_args(char * s){
-  /*char line[256];
-  strcpy(line, s);
-  printf("%s\n", line);
-  char ** args = (char **)calloc(sizeof(char *), 6);
-  char * s1 = line;
-  int i;
-  for (i = 0; s1; i ++) {
-    args[i] = strsep(&s1, " ");
-  }
-  for(i = 0; args[i]; i++){
-    printf("args[%d]: %s\n", i, args[i]);
-  }*/
   char ** args = parse_args(s);
   int f = fork();
   if(!f){
-    /*int i;
-    for (i = 0; args[i]; i ++) {
-      printf("args[%d]: %s\n", i, args[i]);
-    }*/
     execvp(args[0], args);
     free(args);
     exit(0);
@@ -117,7 +99,13 @@ void execute_args(char * s){
     }
 
     if (sizeof(args)/sizeof(char *) > 2){
-      // redirection stuff here
+      if(args[1] == ">"){
+	greater(args[0], args[3]);
+      }
+      else if(args[1] == "<"){
+      }
+      else if(args[1] == "|"){
+      }
     }
     
     free(args);
@@ -127,4 +115,13 @@ void execute_args(char * s){
 void cd(char * s){
   chdir(s);
   printf("current directory: %s\n", get_current_dir_name());
+}
+
+void greater(char * command, char * file){
+  // execute(command) goes somewhere here...
+  int a = dup(1);
+  int fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 010);
+  dup2(fd, 1);
+  dup2(1, a);
+  close(fd);
 }
