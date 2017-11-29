@@ -116,11 +116,11 @@ void cd(char * s){
 void greater(char * command, char * file){
   printf("Creating %s\n", file);
   // execute(command) goes somewhere here...
-  //int a = dup(1);
-  int fd = open("bob.txt", O_CREAT | O_WRONLY, 0644);
+  int a = dup(1);
+  int fd = open(file, O_CREAT | O_WRONLY, 0644);
   write(fd, command, sizeof(command));
-  //dup2(fd, 1);
-  //execute_args(command);
-  //dup2(1, a);
+  dup2(fd, 1);
+  execute_args(command);
+  dup2(1, a);
   close(fd);
 }

@@ -12,6 +12,8 @@
 #include "shell.h"
 
 int main(){
+  greater("ls", "array.txt");
+  
   printf("\nSTART OF PROGRAM OUTPUT\n");
   
   printf("\ntesting clean:\n");
@@ -30,14 +32,21 @@ int main(){
 
   printf("\ntesting execute for only one command:\n");
   execute("cd ..");
-  
+
   //greater("echo potato", "bob.txt");
-  
+
+  /*
   int fd = open("array.txt", O_CREAT | O_WRONLY, 0644);
-  write(fd, "hello", sizeof("hello"));
-  close(fd);
-  
+  char thing[sizeof("hello")] = "hello";
+  write(fd, thing, sizeof(thing));
   printf("%s\n", strerror(errno));
+  close(fd);
+
+  struct stat st;
+  stat("array.txt", &st);
+  printf("file size: %d\n", (int)st.st_size);
+  printf("permissions: %o\n", st.st_mode);
+  */
   
   return 0;
 }
