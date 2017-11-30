@@ -55,6 +55,9 @@ void execute(char * s){
   for(i = 0; commands[i]; i++){
     execute_args(commands[i]);
   }
+
+  free(line);
+  free(commands);
 }
 
 char * clean (char * s){
@@ -115,12 +118,10 @@ void cd(char * s){
 
 void greater(char * command, char * file){
   printf("Creating %s\n", file);
-  // execute(command) goes somewhere here...
   int a = dup(1);
   int fd = open(file, O_CREAT | O_WRONLY, 0644);
-  write(fd, command, sizeof(command));
   dup2(fd, 1);
-  execute_args(command);
+  execute(command);
   dup2(a, 1);
   close(fd);
 }

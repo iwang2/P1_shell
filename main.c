@@ -12,6 +12,7 @@
 #include "shell.h"
 
 int main(){
+  greater("ls", "array.txt");
   
   printf("\nSTART OF PROGRAM OUTPUT\n");
   
@@ -31,8 +32,6 @@ int main(){
 
   printf("\ntesting execute for only one command:\n");
   execute("cd ..");
-  
-  greater("ls", "array.txt");
   
   return 0;
 }
