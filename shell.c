@@ -121,6 +121,6 @@ void greater(char * command, char * file){
   write(fd, command, sizeof(command));
   dup2(fd, 1);
   execute_args(command);
-  dup2(1, a);
+  dup2(a, 1);
   close(fd);
 }
