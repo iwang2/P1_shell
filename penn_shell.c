@@ -7,7 +7,7 @@
 #include "penn_shell.h"
 
 void exec_line(char *line) {
-	char *mutable_line = (char *)calloc(256, sizeof(char));
+	char *mutable_line = (char *)calloc(1024, sizeof(char));
 	strcpy(mutable_line, line);
 	
 	char **commands = split(mutable_line, ";");
@@ -30,15 +30,16 @@ void exec_command(char *com) {
 	if (!fork()) {
 		for (i = 0; args[i]; i ++) {
 			if (!strcmp(args[i], ">")) {
-				greater(args, i);
+				redirect_out(args, i);
 				exit(0);
 			}
 			else if (!strcmp(args[i], "<")) {
-				printf("Has a lesser sign\n");
+				redirect_in(args, i);
 				exit(0);
 			}
 			else if (!strcmp(args[i], "|")) {
 				printf("Has a pipe\n");
+				redirect(args, i);
 				exit(0);
 			}
 		}
@@ -58,22 +59,51 @@ void exec_command(char *com) {
 	}
 }
 
-void greater(char **args, int sign) {
-	printf("Running greater\n=====\n");
-	int i;
-	for (i = 0; args[i]; i ++) {
-		//printf("args[%d]: \"%s\"\n", i, args[i]);
-	}
+void redirect_out(char **args, int sign) {
 	args[sign] = 0;
-	for (i = 0; args[i]; i ++) {
-		//printf("args[%d]: \"%s\"\n", i, args[i]);
-	}
-	int fd = open(args[sign + 1], O_CREAT | O_WRONLY, 0644);
+	int fd = open(args[sign + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	int out = dup(1);
 	dup2(fd, 1);
 	execvp(args[0], args);
 	dup2(1, out);
 	close(fd);
+}
+
+void redirect_in(char **args, int sign) {
+	args[sign] = 0;
+	int fd = open(args[sign + 1], O_RDONLY, 0644);
+	int in = dup(0);
+	dup2(fd, 0);
+	execvp(args[0], args);
+	dup2(0, in);
+	close(fd);
+}
+
+void redirect(char **args, int sign) {
+	char s1[256], s2[256], temp[256];
+	FILE *p1, p2;
+	int i;
+	args[sign] = 0;
+	for (i = 0; args[i]; i ++) {
+		strcat(s1, args[i]);
+		strcat(s1, " ");
+	}
+	*(s1 + strlen(s1) - 1) = 0;
+	//printf("1st arg: %s\n", s1);
+	for (i = 1; args[sign + i]; i ++) {
+		strcat(s2, args[sign + i]);
+		strcat(s2, " ");
+	}
+	*(s2 + strlen(s2) - 1) = 0;
+	//printf("2nd arg: %s\n", s2);
+	
+	p1 = popen(s1, "r");
+	p2 = popen(s2, "w");
+	while (fgets(temp, 256, p1)) {
+		fprintf(p2, "%s", temp);
+	}
+	pclose(p1);
+	pclose(p2);
 }
 
 char *clean(char *com) {
@@ -90,7 +120,7 @@ char *clean(char *com) {
 }
 
 char **split(char *com, char *delim) {
-	char **args = (char **)calloc(10, sizeof(char *));
+	char **args = (char **)calloc(512, sizeof(char *));
 	char *s = com;
 	int i;
 	for (i = 0; s; i ++) {
