@@ -7,7 +7,7 @@
 #include "penn_shell.h"
 
 void exec_line(char *line) {
-	char *mutable_line = (char *)calloc(1024, sizeof(char));
+  char *mutable_line = (char *)calloc(1, sizeof(line));
 	strcpy(mutable_line, line);
 	
 	char **commands = split(mutable_line, ";");
@@ -82,9 +82,6 @@ void redirect(char **args, int sign) {
 	char s1[256], s2[256], temp[8192];
 	FILE *p1, *p2;
 	int i;
-	for (i = 0; args[i]; i ++) {
-		//printf("args[%d]: %s\n", i, args[i]);
-	}
 	args[sign] = 0;
 	for (i = 0; args[i]; i ++) {
 		strcat(s1, args[i]);
@@ -121,7 +118,7 @@ char *clean(char *com) {
 }
 
 char **split(char *com, char *delim) {
-	char **args = (char **)calloc(512, sizeof(char *));
+        char **args = (char **)calloc(sizeof(com));
 	char *s = com;
 	int i;
 	for (i = 0; s; i ++) {
