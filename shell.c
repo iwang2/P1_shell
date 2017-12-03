@@ -105,12 +105,20 @@ void cd (char * s) {
 }
 
 void greater (char * command, char * file) {
-  printf("Creating %s\n", file);
   int a = dup(1);
-  int fd = open(file, O_CREAT | O_WRONLY, 0644);
+  int fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
   dup2(fd, 1);
   execute(command);
   dup2(a, 1);
+  close(fd);
+}
+
+void less (char * command, char * file){
+  int a = dup(0);
+  int fd = open(file, O_RDONLY, 0644);
+  dup2(fd, 0);
+  execute(command);
+  dup2(a, 0);
   close(fd);
 }
 
@@ -128,12 +136,16 @@ int redirect (char * s) {
       greater(s, file);
       return 1;
     }
-    /*
-    if (strcmp(s[i], "<") == 0) {
+    if (s[i] == '<') {
+      *(s+i) = 0;
+      less(s, file);
+      return 1;
     }
-    if (strcmp(s[i], "|") == 0) {
+    if (s[i] == '|') {
+      int p = popen(s, "w");
+      pclose(p);
+      return 1;
     }
-    */
   }
   
   return 0;
