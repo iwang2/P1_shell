@@ -38,6 +38,8 @@ void exec_command(char *com) {
 		exit(0);
 	}
 	else {
+	    int status;
+	    wait(&status);
 		free(args);
 	}
 }

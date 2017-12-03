@@ -6,5 +6,5 @@
 #include "penn_shell.h"
 
 int main() {
-	exec_line("ls -a -l ; echo potato");
+	exec_line("ls -a -l ; echo potato ; cat penn_main.c");
 }
