@@ -38,7 +38,6 @@ void exec_command(char *com) {
 				exit(0);
 			}
 			else if (!strcmp(args[i], "|")) {
-				printf("Has a pipe\n");
 				redirect(args, i);
 				exit(0);
 			}
@@ -50,7 +49,7 @@ void exec_command(char *com) {
 		if (!strcmp(args[0], "cd")) {
 			chdir(args[1]);
 		}
-		if (!strcmp(args[0], "exit")) {
+		else if (!strcmp(args[0], "exit")) {
 			exit(0);
 		}
 		int status;
@@ -80,26 +79,29 @@ void redirect_in(char **args, int sign) {
 }
 
 void redirect(char **args, int sign) {
-	char s1[256], s2[256], temp[256];
-	FILE *p1, p2;
+	char s1[256], s2[256], temp[8192];
+	FILE *p1, *p2;
 	int i;
+	for (i = 0; args[i]; i ++) {
+		//printf("args[%d]: %s\n", i, args[i]);
+	}
 	args[sign] = 0;
 	for (i = 0; args[i]; i ++) {
 		strcat(s1, args[i]);
 		strcat(s1, " ");
 	}
 	*(s1 + strlen(s1) - 1) = 0;
-	//printf("1st arg: %s\n", s1);
+	//printf("1st arg: %ld: %s\n", strlen(s1), s1);
 	for (i = 1; args[sign + i]; i ++) {
 		strcat(s2, args[sign + i]);
 		strcat(s2, " ");
 	}
 	*(s2 + strlen(s2) - 1) = 0;
 	//printf("2nd arg: %s\n", s2);
-	
 	p1 = popen(s1, "r");
 	p2 = popen(s2, "w");
-	while (fgets(temp, 256, p1)) {
+	while (fgets(temp, 8192, p1)) {
+		//printf("%s", temp);
 		fprintf(p2, "%s", temp);
 	}
 	pclose(p1);
