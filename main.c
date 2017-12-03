@@ -12,7 +12,6 @@
 #include "shell.h"
 
 int main(){
-  greater("ls", "array.txt");
   
   printf("\nSTART OF PROGRAM OUTPUT\n");
   
@@ -29,6 +28,9 @@ int main(){
   
   printf("\ntesting execute for multiple commands on one line:\n");
   execute("ls -a -l ; echo potato; echo 3");
+  
+  execute("ls -a -l > ls-a-l.txt");
+  execute("ls > ls.txt");
 
   printf("\ntesting execute for only one command:\n");
   execute("cd ..");
