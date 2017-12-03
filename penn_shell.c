@@ -101,7 +101,6 @@ void redirect(char **args, int sign) {
 	p1 = popen(s1, "r");
 	p2 = popen(s2, "w");
 	while (fgets(temp, 8192, p1)) {
-		//printf("%s", temp);
 		fprintf(p2, "%s", temp);
 	}
 	pclose(p1);
