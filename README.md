@@ -5,8 +5,8 @@ Fall, 2017.
 ## Collaborators:
 Penn Wu, Ida Wang
 
-## Weird Stuff
-We originally started working in
+## Weird Stuff to Take Note of
+There are two sets of files, the first that look normal-ish and the second starting with `penn_`. This is because we had originally started coding on the same files, but eventually it had seemed like redirection was not working, so Penn created a separate set of files to reformat everything from ground up to make our program cleaner. Eventually we figured out that our intial redirection function seemed like it was not working because we had been testing `cd` right before it, but by then Penn had already transferred most of the functions to his new files anyway. So our initial written functions are still the same--just moved over so that they're cleaner with some minor adjustments. See **Files and Functions** for further "detail".
 
 ## Working Features
 - Fork and execute commands 
@@ -19,12 +19,14 @@ We originally started working in
 - There's not really much else that we tried to implement.
 
 ## Bugs
-- The size of a line to be executed cannot be more than 1024 bytes long.
-- I WILL FIX THIS!!!
+- Memory allocation issues have mostly been fixed, but piping will only take up to 256 bytes from the first argument, and 256 bytes from the second. 
 
 ## Files and Functions
+### `makefile`
+Compiles and runs all the `penn_*` files. 
+
 ### `penn_main.c`
-Contains tests for the majority of functions in `penn_shell.h`
+Testing the more complicated functions. Some are commented out.
 
 ### `penn_shell.h`
 Holds the file headers for `penn_shell.c`
@@ -67,3 +69,6 @@ Holds the file headers for `penn_shell.c`
 - INPUT: `char * com`
 - RETURNS: void
 - forks and runs the single command `com` in the child and exits (except in the case of `cd` and `exit`, which are done by the parent)
+
+### `main.c`, `shell.c`, `shell.h` 
+Essentially correlate with all of the `penn_*` files. `main.c` tests some of the simpler functions, like `clean()`, and has perhaps easier to read output. All the functions up to redirecting stdin and piping work. 
