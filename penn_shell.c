@@ -118,7 +118,7 @@ char *clean(char *com) {
 }
 
 char **split(char *com, char *delim) {
-    char **args = (char **)calloc(strlen(com), sizeof(char *));
+	char **args = (char **)calloc(strlen(com), sizeof(char *));
 	char *s = com;
 	int i;
 	for (i = 0; s; i ++) {
