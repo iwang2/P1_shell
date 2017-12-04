@@ -15,11 +15,12 @@ There are two sets of files, the first that look normal-ish and the second start
 - Simple pipes with `|`
 
 ## Nonexistent Features
-- redirecting/piping more than once per command (so you can't do something like `a | b | c | d`)
-- There's not really much else that we tried to implement.
+- Redirecting/piping more than once per command (so you can't do something like `a | b | c | d` or `wc < a.txt > b.txt`)
 
 ## Bugs
-- Memory allocation issues have mostly been fixed, but piping will only take up to 256 bytes from the first argument, and 256 bytes from the second. 
+- Memory allocation issues have mostly been fixed, but piping will only take up to 256 bytes from the first argument, and 256 bytes from the second.
+- Putting an ampersand in a command will not run the command in the background. Calling `gedit & ; ls`, for example, will instead launch gedit and create a new file called "&".
+- In order to interact with our program, you must edit penn_main.c (or another main C file) and call exec_line(). Reading commands from a text file, for example, has not been implemented.
 
 ## Files and Functions
 ### `makefile`
