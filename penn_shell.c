@@ -7,7 +7,7 @@
 #include "penn_shell.h"
 
 void exec_line(char *line) {
-  char *mutable_line = (char *)calloc(1, sizeof(line));
+	char *mutable_line = (char *)calloc(strlen(line), sizeof(char));
 	strcpy(mutable_line, line);
 	
 	char **commands = split(mutable_line, ";");
@@ -118,7 +118,7 @@ char *clean(char *com) {
 }
 
 char **split(char *com, char *delim) {
-        char **args = (char **)calloc(1, sizeof(com));
+    char **args = (char **)calloc(strlen(com), sizeof(char *));
 	char *s = com;
 	int i;
 	for (i = 0; s; i ++) {
